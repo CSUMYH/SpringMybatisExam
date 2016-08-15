@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:mybatis="http://www.mybatis.org/schema/mybatis"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+     http://www.springframework.org/schema/beans/spring-beans.xsd    
+     http://www.springframework.org/schema/context    
+     http://www.springframework.org/schema/context/spring-context.xsd    
+     http://www.springframework.org/schema/aop   
+     http://www.springframework.org/schema/aop/spring-aop.xsd"> 
+		
+		
+		
+<!-- 		<bean id= "dateSource" class="org.springframework.jdbc.datesource.DriverManagerDataSource"> -->
+<!-- 			<property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
+<!-- 			<property name="url" value="jdbc:mysql://127.0.0.1:3306/sakila"/> -->
+<!-- 			<property name="username" value="root"/> -->
+<!-- 			<property name="password" value="root"/> -->
+<!-- 		</bean>	 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/sakila"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+        <property name="maxActive" value="100"></property>
+        <property name="maxIdle" value="30"></property>
+        <property name="maxWait" value="500"></property>
+        <property name="defaultAutoCommit" value="true"></property>
+    </bean>
+<!-- 配置sqlSessionFactory -->
+		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource"/>
+			<property name="mapperLocations" value="classpath:com/mao/hand/Beans/*.Mapper.xml"/>
+		</bean>
+		
+		<bean id="AddressDao" class="com.mao.hand.DaoImpl.AddressDaoImpl">
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		</bean>
+		<bean id="CityDao" class="com.mao.hand.DaoImpl.CityDaoImpl">
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		</bean>
+		<bean id="CountryDao" class="com.mao.hand.DaoImpl.CountryDaoImpl">
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		</bean>
+		<bean id="CustomerDao" class="com.mao.hand.DaoImpl.CustomerDaoImpl">
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		</bean>
+		<bean id="StoreDao" class="com.mao.hand.DaoImpl.StoreDaoImpl">
+			<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		</bean>
+		
+		<bean id="AddressService" class="com.mao.hand.ServiceImpl.AddressServiceImpl">
+			<property name="addressDaoImpl" ref="AddressDao"/>
+		</bean>
+</beans>
