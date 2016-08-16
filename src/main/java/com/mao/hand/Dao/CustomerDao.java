@@ -7,6 +7,6 @@ import com.mao.hand.Beans.Customer;
 public interface CustomerDao {
 	public abstract List<Customer> getAllCustomer();
 	public abstract void updateCustomer();
-	public abstract void InsertCustomer();
-	public abstract void deleteCustomer();
+	public abstract void InsertCustomer(Customer customer);
+	public abstract void deleteCustomer(Customer customer);
 }

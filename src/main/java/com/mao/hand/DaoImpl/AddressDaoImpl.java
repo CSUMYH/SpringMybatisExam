@@ -2,29 +2,22 @@ package com.mao.hand.DaoImpl;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.mao.hand.Beans.Address;
 import com.mao.hand.Dao.AddressDao;
 
-public class AddressDaoImpl extends SqlSessionTemplate implements AddressDao {
+public class AddressDaoImpl extends SqlSessionDaoSupport implements AddressDao {
 
-	SqlSession sqlSession;
-	public AddressDaoImpl(SqlSessionFactory sqlSessionFactory) {
-		super(sqlSessionFactory);
-		this.sqlSession =sqlSessionFactory.openSession();
-	}
+
 
 	public List<Address> getAllAddress() {
-		List<Address> list = sqlSession.selectList("findAllAddress");
-		System.out.println(list);
+		List<Address> list = getSqlSession().selectList("findAllAddress");
 		return list;
 	}
 
 	public void updateAddress() {
-
+		
 	}
 
 	public void InsertAddress() {

@@ -4,20 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.mao.hand.Beans.Customer"> 
-	<resultMap type="Customer" id="CustomerResult">	
-	    <id	property="customer_id" column="customer_id"/>	      
-		<result property="store_id" column="store_id"/>
-		<result property="first_name" column="first_name"/>
-		<result property="last_name" column="last_name"/>
-		<result property="email" column="email"/>
-		<result property="address_id" column="address_id"/>
-		<result property="active" column="active"/>
-		<result property="create_date" column="create_date"/>
-		<result property="last_update" column="last_update"/>
-
-	</resultMap>
   	
-  	<select id ="findAllCustomer" resultMap ="CustomerResult">
+  	<select id ="findAllCustomer" resultType ="com.mao.hand.Beans.Customer">
   		select * from customer
   	</select>
+  	
+  	<insert id="insertIntoCustomer">
+  	insert into Customer (active,last_update,store_id,first_name,last_name,email,address_id,create_date) value (#{active},#{last_update},#{store_id},#{first_name},#{last_name},#{email},#{address_id},#{create_date})
+  	</insert>
+  	
+  	<select id="findLastInsert" resultType="com.mao.hand.Beans.Customer">
+  	select * from customer  order by customer_id DESC limit 1 
+  	</select>
+  	
+  	<delete id="deleteCustomerById">
+  	delete FROM customer where customer_id = #{customer_id}
+  	</delete>
 </mapper>

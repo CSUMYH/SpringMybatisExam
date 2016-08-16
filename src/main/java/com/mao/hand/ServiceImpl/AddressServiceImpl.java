@@ -10,7 +10,6 @@ public class AddressServiceImpl implements AddressService {
 	AddressDaoImpl addressDaoImpl;
 	public void setAddressDaoImpl(AddressDaoImpl addressDaoImpl) {
 		this.addressDaoImpl = addressDaoImpl;
-		System.out.println(addressDaoImpl+"2");
 	}
 	public List<Address> getAllAddress() {
 		return addressDaoImpl.getAllAddress();

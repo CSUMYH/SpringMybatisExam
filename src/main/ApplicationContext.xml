@@ -12,6 +12,8 @@
      http://www.springframework.org/schema/aop   
      http://www.springframework.org/schema/aop/spring-aop.xsd"> 
 		
+		
+	
 		<bean id= "dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 			<property name="url" value="jdbc:mysql://127.0.0.1:3306/sakila"/>
@@ -22,8 +24,10 @@
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<property name="dataSource" ref="dataSource"/>
 			<property name="mapperLocations" value="classpath:com/mao/hand/Beans/*.xml"/>
-		</bean>	
+		</bean>
+		
 		<bean id="log" class="com.mao.hand.Cut.Log"/>
+<!-- 		<aop:aspectj-autoproxy/> -->
 		<aop:config proxy-target-class="true">
 			<aop:aspect ref="log"> 
 				<aop:pointcut expression="execution(* com.mao.hand.ServiceImpl.CustomerServiceImpl.SelectLastInsert(..))" id="pointcut"/>
@@ -31,6 +35,7 @@
 				<aop:after method="After" pointcut-ref="pointcut"/>
 			</aop:aspect>
 		</aop:config>
+		
 		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 			<property name="dataSource" ref="dataSource"></property>
 		</bean>	
@@ -43,10 +48,13 @@
 				<tx:method name="update" propagation="REQUIRED"/>
 			</tx:attributes>
 		</tx:advice>
+		
 		<aop:config>	
 		<aop:pointcut expression="execution(* com.mao.hand.DaoImpl.*.*(..))" id="txpointcut"/>
 			<aop:advisor advice-ref="txAdvice" pointcut-ref="txpointcut"/>
-		</aop:config>	
+		</aop:config>
+
+			
 		<bean id="Address" class="com.mao.hand.Beans.Address"/>
 		<bean id="City" class="com.mao.hand.Beans.City"/>
 		<bean id="Country" class="com.mao.hand.Beans.Country"/>	
